@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="Del Tech Text Book Database" content="width=device-width, initial-scale=1.0">
+	<title>Del Tech Text Book Database</title>
+
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/styles.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<header>
+		<div class="background">
+			<ul class="navigation">
+				<li><a href="homePage.html" class="animate"> H O M E </a></li>
+				<li><a href="searchPage.html" class="animate"> S E A R C H </a></li>
+				<li><a href="adminPage.html" class="animate" id="navLogin"> L O G I N </a></li>
+				<li><a href="adminPage.html" class="animate" id="adminConsole" style="display: none;"> A D M I N </a><li>
+        <li><a href="adminPage.html" class="animate" id="userlogOut" style="display: none;"> L O G O U T </a></li>
+			</ul>
+		</div>
+	</header>
+
+	</br>
+
+	<div id = "tableViewed" class="container-fluid">
+		<table id="searchBookTable" class="table table-striped table-bordered hide" style="width:100%">
+			<thead>
+				<tr>
+					<th>CourseID</th>
+					<th>Course Title</th>
+					<th>Year</th>
+					<th>Author</th>
+					<th>Book Title</th>
+					<th>Edition</th>
+					<th>ISBN</th>
+					<th>Publisher</th>
+					<th>Lead</th>
+					<th>LeadName</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<th>CourseID</th>
+					<th>Course Title</th>
+					<th>Year</th>
+					<th>Author</th>
+					<th>Book Title</th>
+					<th>Edition</th>
+					<th>ISBN</th>
+					<th>Publisher</th>
+					<th>Lead</th>
+					<th>LeadName</th>
+					<th>Notes</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	</br>
+	</br>
+
+
+	<!-- Modal & Form -->
+	<form class="needs-validation" novalidate>
+		<div class="modal fade" id="editBookSearchModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Edit Book</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!-- modal body -->
+					<div class="modal-body">
+						<input id="cidForm" type="hidden">
+						<input id="idForm" type="hidden">
+						<div class="form-row">
+							<div class="col-6 col-md-4">
+								<label for="courseNumForm">Course Number</label>
+								<select id="courseNumForm" class="form-control"></select>
+							</div>
+							<div class="col-12 col-md-8">
+								<label for="courseTitleForm">Course Title</label>
+								<input type="text" class="form-control" id="courseTitleForm" readonly required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-3">
+								<label for="yearForm">Year</label>
+								<input type="number" class="form-control" id="yearForm" minlength="6" maxlength="6" pattern="^[a-zA-Z0-9_.-]*$" required>
+							</div>
+							<div class="col-9">
+								<label for="authorForm">Author</label>
+								<input type="text" class="form-control" id="authorForm" pattern="^[a-zA-Z,&.-]" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col">
+								<label for="bookTitleForm">Book Title</label>
+								<input type="text" class="form-control" id="bookTitleForm" pattern="^[a-zA-Z0-9_.-]" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-2">
+								<label for="editionForm">Edition</label>
+								<input type="text" class="form-control" id="editionForm">
+							</div>
+							<div class="col-md-5">
+								<label for="isbnForm">ISBN</label>
+								<input type="text" class="form-control" id="isbnForm">
+							</div>
+							<div class="col-md-5">
+								<label for="publisherForm">Publisher</label>
+								<input type="text" class="form-control" id="publisherForm">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="row justify-content-md-center">
+								<div class="col col-md-4">
+									<label for="leadForm">Lead</label>
+									<input type="text" class="form-control" id="leadForm" maxlength="4">
+								</div>
+								<div class="col col-md-4">
+									<label for="leadNameForm">Lead Name</label>
+									<input type="text" class="form-control" id="leadNameForm">
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<label for="notesForm">Notes: </label>
+							<textarea type="text" id="notesForm" class="md-textarea form-control" rows="4"></textarea>
+						</div>
+					</div>
+					<!-- End modal body -->
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="submitBookModal()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script type="text/javascript" src="scripts/databaseScripts.js"></script>
+
+</body>
+
+</html>

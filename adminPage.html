@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="css/adminStyles.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="background-color: transparent;">
+
+  <header>
+    <div class="background">
+      <ul class="navigation">
+        <li><a href="homePage.html" class="animate"> H O M E </a></li>
+        <li><a href="searchPage.html" class="animate"> S E A R C H </a></li>
+        <li><a href="adminPage.html" class="animate" id="navLogin"> L O G I N </a></li>
+        <li><a href="adminPage.html" class="animate" id="adminConsole" style="display: none;"> A D M I N </a><li>
+        <li><a href="adminPage.html" class="animate" id="userlogOut" style="display: none;"> L O G O U T </a></li>
+
+      </ul>
+    </div>
+  </header>
+
+  <div class="content" id="loginContent">
+    <label style="color: white;"><b>Username</b></label>
+    <input id="txtEmail" type="email" placeholder="Email">
+    <label style="color: white;"><b>Password</b></label>
+    <input id="txtPassword" type="password" placeholder="Password">
+
+    <button class="inBtn" id="userlogIn"> Login </button>
+    <button class="signUpBtn" id="userSignUp"> Sign Up </button>
+  </div>
+
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  
+    <input type="button" value="Edit Courses" id="editCoursesPanel" class="adminPanel">
+    <input type="button" value="Edit Books" id="editBooksPanel" class="adminPanel">
+    
+  </div>
+
+  <div id="main" style="display:none;">
+    <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>
+    <h1 style="text-align: center"><strong>Welcome Admin!</strong></h1>
+
+   
+
+    <div id="editCoursesDiv" class="adminDiv">
+      <div class="border" style="text-align:center; border-style: solid; padding-bottom:100px; background-color:ghostwhite">
+        <h2>Edit Courses</h2>
+        <table id="searchCourseTable" class="table table-striped table-bordered nowrap hide">
+          <thead>
+            <tr>
+              <th>CourseID</th>
+              <th>Course Title</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <th>CourseID</th>
+              <th>Course Title</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="editBooksDiv" class="adminDiv hide">
+      <div class="border" style="text-align:center; border-style: solid; padding-bottom:100px; background-color:ghostwhite">
+        <h2>Edit Books</h2>
+        <table id="searchBookTable" class="table table-striped table-bordered nowrap hide">
+          <thead>
+            <tr>
+              <th>CourseID</th>
+              <th>Course Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Book Title</th>
+              <th>Edition</th>
+              <th>ISBN</th>
+              <th>Publisher</th>
+              <th>Lead</th>
+              <th>LeadName</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <th>CourseID</th>
+              <th>Course Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Book Title</th>
+              <th>Edition</th>
+              <th>ISBN</th>
+              <th>Publisher</th>
+              <th>Lead</th>
+              <th>LeadName</th>
+              <th>Notes</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  
+
+
+  </div>
+
+
+
+
+  <!-- Edit Book Modal & Form -->
+  <form class="needs-validation" novalidate>
+    <div class="modal fade" id="editBookSearchModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit Book</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- modal body -->
+          <div class="modal-body">
+            <input id="cidForm" type="hidden">
+            <input id="idForm" type="hidden">
+            <div class="form-row">
+              <div class="col-6 col-md-4">
+                <label for="courseNumForm">Course Number</label>
+                <select id="courseNumForm" class="form-control"></select>
+              </div>
+              <div class="col-12 col-md-8">
+                <label for="courseTitleForm">Course Title</label>
+                <input type="text" class="form-control" id="courseTitleForm" readonly required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-3">
+                <label for="yearForm">Year</label>
+                <input type="number" class="form-control" id="yearForm" minlength="6" maxlength="6" pattern="^[a-zA-Z0-9_.-]*$" required>
+              </div>
+              <div class="col-9">
+                <label for="authorForm">Author</label>
+                <input type="text" class="form-control" id="authorForm" pattern="^[a-zA-Z,&.-]" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <label for="bookTitleForm">Book Title</label>
+                <input type="text" class="form-control" id="bookTitleForm" pattern="^[a-zA-Z0-9_.-]" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-2">
+                <label for="editionForm">Edition</label>
+                <input type="text" class="form-control" id="editionForm">
+              </div>
+              <div class="col-md-5">
+                <label for="isbnForm">ISBN</label>
+                <input type="text" class="form-control" id="isbnForm">
+              </div>
+              <div class="col-md-5">
+                <label for="publisherForm">Publisher</label>
+                <input type="text" class="form-control" id="publisherForm">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="row justify-content-md-center">
+                <div class="col col-md-4">
+                  <label for="leadForm">Lead</label>
+                  <input type="text" class="form-control" id="leadForm" maxlength="4">
+                </div>
+                <div class="col col-md-4">
+                  <label for="leadNameForm">Lead Name</label>
+                  <input type="text" class="form-control" id="leadNameForm">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="notesForm">Notes: </label>
+              <textarea type="text" id="notesForm" class="md-textarea form-control" rows="4"></textarea>
+            </div>
+          </div>
+          <!-- End modal body -->
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="submitBookModal()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <!-- Edit Book Modal & Form -->
+  <form class="needs-validation" novalidate>
+    <div class="modal fade" id="editCourseSearchModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit Course</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- modal body -->
+          <div class="modal-body">
+            <input id="courseCidForm" type="hidden">
+            <input id="courseIdForm" type="hidden">
+            <div class="form-row">
+              <div class="col">
+                <label for="courseCourseNumberForm">Course Number</label>
+                <input type="text" class="form-control" id="courseCourseNumberForm" pattern="^[a-zA-Z0-9_.-]*$" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <label for="courseCourseTitleForm">Course Title</label>
+                <input type="text" class="form-control" id="courseCourseTitleForm" pattern="^[a-zA-Z0-9_.-]*$" required>
+              </div>
+            </div>
+
+          </div>
+          <!-- End modal body -->
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="submitCourseModal()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
+    <!-- delete modal -->
+  <form class="needs-validation" novalidate>
+    <div class="modal fade" id="deleteWarningModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- modal body -->
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="col">
+                <p>Are you sure you want to permanently delete this?</p>
+            </div>
+
+          </div>
+          <!-- End modal body -->
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" id="yesDelete" class="btn btn-primary">Yes</button>
+          </div>
+
+      </div>
+    </div>
+	</div>
+  </form>
+  
+  <form class="needs-validation" novalidate>
+    <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="poop">Choose File</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- modal body -->
+    <div class="modal-body">
+		<div class="form-row">
+                <p id="importPtag"></p>
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<input type="file" class="" id="fileInput">
+			</div>
+			<div class="col">
+				<input type="button" class="btn-danger form-control" id="confirmImport">
+			</div>
+		</div>
+	</div>
+    </div>
+    </div>
+	</div>
+  </form>
+  
+    <form class="needs-validation" novalidate>
+    <div class="modal fade" id="updatingModal" tabindex="-1" role="dialog" aria-labelledby="idkwhatthisisusedfor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="p">Updating</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- modal body -->
+    <div class="modal-body">
+	    <input id="progInc" type="hidden">
+        <input id="prog" value="0" type="hidden">
+		<div class="form-row">
+                <p id="updatingPtag"></p>
+		</div>
+		<div class="form-row">
+                <p>Refresh the page to see effects. Wait till complete.</p>
+		</div>
+		<div class="form-row">
+			<div class="progress" style="width:100%">
+			<div class="progress-bar" id="upProg" style="width:70%">70%</div>
+			</div> 
+		</div>
+		</div>
+	</div>
+    </div>
+    </div>
+  </form>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="scripts/adminScripts.js"></script>
+</body>
+
+</html>

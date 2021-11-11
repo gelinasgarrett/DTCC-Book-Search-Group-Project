@@ -1,0 +1,229 @@
+html {
+  background: url(../img/deltechLibBackground.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#container, #buttondiv {
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+}
+
+/*Delaware Tech Logo Home*/
+/*.logoPls {
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}*/
+img {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+/* Button animation and design */
+#inputfile {
+  visibility: hidden;
+  width: 100px;
+}
+
+/* John Added */
+/* Search Bar*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.search {
+  width: 100%;
+  margin-top: 40%;
+  position: absolute;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #009544;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #009544;
+}
+
+.searchTerm:focus {
+  color: #009544;
+}
+
+/* For the bootstrap table */
+tr {
+  color: white;
+}
+
+th {
+  background-color: #009544;
+}
+
+tbody {
+  background-color: #7f7d63;
+  height: 100%;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #009544;
+  background: #009544;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap {
+  width: 30%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.searchBar {
+  text-align: center;
+  width: 55%;
+  left: 10%;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+
+body {
+  background-color: transparent !important;
+  text-align: center;
+}
+
+.logo img {
+  float: left;
+  width: 150px;
+  height: auto;
+}
+
+/*Nav Bar*/
+.background {
+  background-size: 35%;
+  background-color: #009544;
+  background-repeat: no-repeat;
+  /*The height of the top nav bar*/
+  height: 35px;
+  background: cover;
+  background-position: center;
+}
+
+.navigation {
+  text-align: center;
+  float: center;
+  list-style: none;
+  margin-top: 0px;
+}
+
+.navigation li {
+  display: inline-block;
+}
+
+.navigation li a {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 20px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+
+.navigation li a.animate::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 5px;
+  background: white;
+  -webkit-transition: width .3s;
+}
+
+.navigation li a.animate:hover::after {
+  width: 100%;
+  -webkit-transition: width .3s;
+}
+
+/*Brett's Table*/
+tr.group,
+tr.group:hover {
+  background-color: #c09853 !important;
+}
+
+table.table tbody tr:hover {
+  background-color: gray;
+}
+
+.hide {
+  display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dropdown-check-list {
+  display: inline-block;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+}

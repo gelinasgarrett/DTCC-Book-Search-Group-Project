@@ -1,0 +1,208 @@
+.header {
+  text-align: center;
+}
+
+/*Original Body*/
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #009544;
+}
+
+html {
+  background: url(../img/deltechLibBackground.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/*Fade in login box*/
+.content {
+  animation: fadeIn .25s forwards;
+  animation-delay: .50s;
+  /* optional */
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/*login page css*/
+#txtPassword, #txtEmail {
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  opacity: 0.85;
+  font-size: 17px;
+}
+
+#txtPassword:hover, #txtEmail:hover {
+  opacity: 1;
+}
+
+label {
+  display: block !important;
+}
+
+.inBtn, .signUpBtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+}
+
+.inBtn:hover, .signUpBtn:hover {
+  background-color: #fdf8e4;
+  opacity: 1;
+  color: #4CAF50;
+}
+
+.content {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  float: center;
+  background: #009544;
+  max-width: 960px;
+  margin: 30px auto;
+  padding: 20px 30px;
+  border-radius: 10px 120px 10px 10px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1)
+}
+
+.sidebar {
+  margin-top: 5%;
+  border-radius: 0px 60px 60px 0px;
+  -moz-border-radius: 0px 60px 60px 0px;
+  -webkit-border-radius: 0px 60px 60px 0px;
+  border: 0px solid #000000;
+  height: 45%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #009544;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar input {
+  padding: 8px 8px 8px 32px;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar input:hover {
+  color: #fdf8e4;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #009544;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  color: #fdf8e4;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+.background {
+  background-size: 35%;
+  background-color: #009544;
+  background-repeat: no-repeat;
+  /*The height of the top nav bar*/
+  height: 35px;
+  background: cover;
+  background-position: center;
+}
+
+.navigation {
+  text-align: center;
+  float: center;
+  list-style: none;
+  margin-top: 0px;
+}
+
+.navigation li {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+
+.navigation li a {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 20px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+
+.navigation li a.animate::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 5px;
+  background: white;
+  -webkit-transition: width .3s;
+}
+
+.navigation li a.animate:hover::after {
+  width: 100%;
+  -webkit-transition: width .3s;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+
+.dataTables_filter label {
+  float: right;
+  margin-right: 15px;
+  
+}
+
+.selected {
+  background-color: #D5F0DF !important;
+}
